@@ -1,0 +1,273 @@
+<div>
+  <div style="height: 100vh">
+    <div>
+      <div
+        class="shadow w-60 p-5 position-absolute top-50 start-50 translate-middle height-hscreen"
+      >
+        <form #customerForm="ngForm" (ngSubmit)="register(customerForm)">
+          <h4 class="display-6 text-center py-2">Customer Details</h4>
+          <div class="form-grid">
+            <div>
+              <label for="name">Name</label>
+              <div>
+                <input
+                  id="name"
+                  required
+                  #name="ngModel"
+                  ngModel
+                  name="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter customer name"
+                />
+                <div *ngIf="name.invalid && name.touched">
+                  <small class="text-danger" *ngIf="name.errors?.['required']"
+                    >Required</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <div>
+                <input
+                  id="email"
+                  required
+                  #email="ngModel"
+                  ngModel
+                  name="email"
+                  type="email"
+                  class="form-control"
+                  placeholder="Enter customer email"
+                />
+                <div *ngIf="email.invalid && email.touched">
+                  <small class="text-danger" *ngIf="email.errors?.['required']"
+                    >Required</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div>
+              <label for="phone">Phone Number</label>
+              <div>
+                <input
+                  id="phone"
+                  required
+                  #phone="ngModel"
+                  ngModel
+                  name="phone"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter customer phone number"
+                />
+                <div *ngIf="phone.invalid && phone.touched">
+                  <small
+                    class="text-danger"
+                    *ngIf="phone.errors?.['required']"
+                    >Required</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div>
+              <label for="order_id">Order Id</label>
+              <div>
+                <input
+                  id="order_id"
+                  required
+                  #orderId="ngModel"
+                  ngModel
+                  name="order_id"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter customer order id"
+                />
+                <div *ngIf="orderId.invalid && orderId.touched">
+                  <small
+                    class="text-danger"
+                    *ngIf="orderId.errors?.['required']"
+                    >Required</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group text-center">
+            <input class="btn btn-primary" type="submit" value="Submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <br />
+
+  <div class="mt-5">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Order Id</th> 
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers">
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.phone }}</td>
+          <td>{{ customer.orderId }}</td>
+
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#editModal"
+              (click)="edit(customer)"
+            >
+              Edit
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="deleteCustomer(customer)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div
+    class="modal fade"
+    id="editModal"
+    tabindex="-1"
+    aria-labelledby="editModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editModalLabel">Update Customer</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form #updateForm="ngForm" (ngSubmit)="updateCustomer()">
+            <h4 class="display-6 text-center py-2">Update Customer</h4>
+
+            <div>
+              <label for="name">Name</label>
+              <div>
+                <input
+                  id="name"
+                  required
+                  #name="ngModel"
+                  [(ngModel)]="customerToUpdate.name"
+                  name="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter name"
+                />
+                <div *ngIf="name.invalid && name.touched">
+                  <small class="text-danger" *ngIf="name.errors?.['required']"
+                    >Required</small
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div>
+              <label for="email">Email</label>
+              <div>
+                <input
+                  id="email"
+                  required
+                  #email="ngModel"
+                  [(ngModel)]="customerToUpdate.email"
+                  name="email"
+                  type="email"
+                  class="form-control"
+                  placeholder="Enter email"
+                />
+                <div *ngIf="email.invalid && email.touched">
+                  <small class="text-danger" *ngIf="email.errors?.['required']"
+                    >Required</small
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div>
+              <label for="phone">Phone Number</label>
+              <div>
+                <input
+                  id="phone"
+                  required
+                  #phone="ngModel"
+                  [(ngModel)]="customerToUpdate.phone"
+                  name="phone"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter phone number"
+                />
+                <div *ngIf="phone.invalid && phone.touched">
+                  <small
+                    class="text-danger"
+                    *ngIf="phone.errors?.['required']"
+                    >Required</small
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div>
+              <label for="order_id">Order Id</label>
+              <div>
+                <input
+                  id="order_id"
+                  required
+                  #order_id="ngModel"
+                  [(ngModel)]="customerToUpdate.orderId"
+                  name="order_id"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter order id"
+                />
+                <div *ngIf="order_id.invalid && order_id.touched">
+                  <small
+                    class="text-danger"
+                    *ngIf="order_id.errors?.['required']"
+                    >Required</small
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div class="form-group text-center">
+              <input class="btn btn-primary" type="submit" value="Update" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
